@@ -20,6 +20,9 @@ importers:
       '@fontsource-variable/dancing-script':
         specifier: ^5.1.0
         version: 5.1.0
+      '@fontsource-variable/recursive':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@fontsource/average-sans':
         specifier: ^5.1.0
         version: 5.1.0
@@ -393,6 +396,9 @@ packages:
 
   '@fontsource-variable/dancing-script@5.1.0':
     resolution: {integrity: sha512-SgVT0jPYUn77oqTabyVQesH5eL6FeHUmIDCLPCMrsOb7pbyTrH2PT7g4VElz9J5DAe3qH6NhovxfcSJjVoFluA==}
+
+  '@fontsource-variable/recursive@5.1.0':
+    resolution: {integrity: sha512-7KNC41jWsceeXjghwgglP4/Pcb+TmSXjQPDipIZLcAAPU5R0/+NsRztclG+1w2ehSuxG9zJ1ZE7Q/16yt35Shg==}
 
   '@fontsource/average-sans@5.1.0':
     resolution: {integrity: sha512-17XkIyjg4t3HjI2qyN0vaHRN/2oN5qnifPvKZDebBZxvS8MPA+GcTU5m4rpvxMGeOg2yuH1vZ47m496fojbrtw==}
@@ -2592,6 +2598,8 @@ snapshots:
     optional: true
 
   '@fontsource-variable/dancing-script@5.1.0': {}
+
+  '@fontsource-variable/recursive@5.1.0': {}
 
   '@fontsource/average-sans@5.1.0': {}
 
