@@ -23,9 +23,6 @@ importers:
       '@fontsource-variable/recursive':
         specifier: ^5.1.0
         version: 5.1.0
-      '@fontsource/average-sans':
-        specifier: ^5.1.0
-        version: 5.1.0
       '@radix-ui/react-icons':
         specifier: ^1.3.0
         version: 1.3.0(react@18.3.1)
@@ -399,9 +396,6 @@ packages:
 
   '@fontsource-variable/recursive@5.1.0':
     resolution: {integrity: sha512-7KNC41jWsceeXjghwgglP4/Pcb+TmSXjQPDipIZLcAAPU5R0/+NsRztclG+1w2ehSuxG9zJ1ZE7Q/16yt35Shg==}
-
-  '@fontsource/average-sans@5.1.0':
-    resolution: {integrity: sha512-17XkIyjg4t3HjI2qyN0vaHRN/2oN5qnifPvKZDebBZxvS8MPA+GcTU5m4rpvxMGeOg2yuH1vZ47m496fojbrtw==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2600,8 +2594,6 @@ snapshots:
   '@fontsource-variable/dancing-script@5.1.0': {}
 
   '@fontsource-variable/recursive@5.1.0': {}
-
-  '@fontsource/average-sans@5.1.0': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
