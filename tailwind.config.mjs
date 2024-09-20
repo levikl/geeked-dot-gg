@@ -4,6 +4,19 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      animation: {
+        'slide': 'slide 20s linear infinite',
+      },
+      keyframes: {
+        'slide': {
+          '0%': { left: '0' },
+          '100%': { left: 'var(--scroll-diff)' },
+        },
+      },
+      fontFamily: {
+        'sans': ['"Recursive Variable"', 'sans-serif'],
+        'dancing-script': ['"Dancing Script Variable"', 'cursive']
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
