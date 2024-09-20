@@ -18,17 +18,17 @@ export function StickyHeader() {
         )}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <h1 className='text-2xl font-medium font-dancing-script cursor-default'>
+          <h1 className='text-3xl font-normal font-dancing-script cursor-default'>
             <span className="text-teal-200">geeked</span>
-            <span className="text-white ml-0.5">.</span>
-            <span className="text-cyan-200">gg</span>
+            <span className="text-cyan-300 ml-0.5">.</span>
+            <span className="text-cyan-50">gg</span>
           </h1>
           <div className="flex items-center space-x-4">
             <nav>
               <ul className="flex space-x-4">
                 {['Home', 'Services', 'Contact'].map((item) => (
                   <li key={item}>
-                    <a href={`#${item.toLowerCase()}`} className="text-gray-300 hover:text-white">
+                    <a href={item === 'Contact' ? 'mailto:levikl@geeked.gg' : `#${item.toLowerCase()}`} className="text-gray-300 hover:text-white">
                       {item}
                     </a>
                   </li>
