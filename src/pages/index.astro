@@ -1,37 +1,34 @@
 ---
-import Layout from '@/layouts/root-layout.astro'
+import Layout from "~/layouts/root-layout.astro";
 
 const brandLogos = [
-  { imgUrl: '/marathon.svg', title: 'Marathon', className: 'min-w-[100px] w-[100px]' },
-  { imgUrl: '/testdouble.svg', title: 'Test Double', className: 'min-w-[100px] w-[100px]' },
-  { imgUrl: '/trane.svg', title: 'Trane Technologies', className: 'min-w-[100px] w-[100px]' },
-  { imgUrl: '/amazon.svg', title: 'Amazon', className: 'min-w-[100px] w-[100px]' },
-  { imgUrl: '/honda.svg', title: 'Honda', className: 'min-w-[100px] w-[100px]' },
-  { imgUrl: '/jpmorgan.svg', title: 'JPMorgan Chase & Co.', className: 'min-w-[200px] w-[200px]' },
-  { imgUrl: '/cmm.svg', title: 'CoverMyMeds', className: 'min-w-[100px] w-[200px]' },
-  { imgUrl: '/bitfreighter.svg', title: 'bitfreighter', className: 'min-w-[100px] w-[100px]' },
-]
+  { imgUrl: "/marathon.svg", title: "Marathon", className: "min-w-[100px] w-[100px]" },
+  { imgUrl: "/testdouble.svg", title: "Test Double", className: "min-w-[100px] w-[100px]" },
+  { imgUrl: "/trane.svg", title: "Trane Technologies", className: "min-w-[100px] w-[100px]" },
+  { imgUrl: "/amazon.svg", title: "Amazon", className: "min-w-[100px] w-[100px]" },
+  { imgUrl: "/honda.svg", title: "Honda", className: "min-w-[100px] w-[100px]" },
+  { imgUrl: "/jpmorgan.svg", title: "JPMorgan Chase & Co.", className: "min-w-[200px] w-[200px]" },
+  { imgUrl: "/cmm.svg", title: "CoverMyMeds", className: "min-w-[100px] w-[200px]" },
+  { imgUrl: "/bitfreighter.svg", title: "bitfreighter", className: "min-w-[100px] w-[100px]" },
+];
 ---
 
-<Layout title='Home'>
-  {/* Hero Section with Carousel */}
-  <section class='bg-gradient-to-r from-teal-600 to-cyan-700 text-white py-20'>
-    <div class='container mx-auto flex justify-between px-4'>
-      <div class='flex flex-col justify-center'>
-        <h2 class='text-3xl md:text-4xl font-bold mb-4'>Hey, I'm Levi 👋</h2>
-        <p class='text-lg md:text-xl mb-8'>
-          Software consultant specializing in TypeScript and React development
-        </p>
-        <div class='space-x-4'>
+<Layout title="Home">
+  <section class="bg-gradient-to-r from-teal-600 to-cyan-700 text-white py-20">
+    <div class="container mx-auto flex justify-between px-4">
+      <div class="flex flex-col justify-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Hey, I'm Levi 👋</h2>
+        <p class="text-lg md:text-xl mb-8">Software consultant</p>
+        <div class="space-x-4">
           <a
-            href='mailto:levikl@geeked.gg'
-            class='border border-gray-800 bg-gray-800 text-teal-400 hover:text-teal-200 px-6 py-2 rounded-full font-semibold hover:bg-gray-700 transition-colors'
+            href="mailto:levikl@geeked.gg"
+            class="border border-gray-800 bg-gray-800 text-teal-400 hover:text-teal-200 px-6 py-2 rounded-full font-semibold hover:bg-gray-700 transition-colors"
           >
             Contact me
           </a>
           <a
-            href='#services'
-            class='border border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white/10 hover:border-teal-300 hover:text-teal-300 transition-colors'
+            href="#services"
+            class="border border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white/10 hover:border-teal-300 hover:text-teal-300 transition-colors"
           >
             Services
           </a>
@@ -40,36 +37,34 @@ const brandLogos = [
     </div>
   </section>
 
-  {/* About Me Section */}
-  <section id='about' class='py-20 bg-gray-900'>
-    <div class='container mx-auto px-4'>
-      <h3 class='text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-white'>About Me</h3>
-      <p class='text-base md:text-lg text-center max-w-2xl mx-auto text-gray-300'>
+  <section id="about" class="py-20 bg-gray-900">
+    <div class="container mx-auto px-4">
+      <h3 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-white">About Me</h3>
+      <p class="text-base md:text-lg text-center max-w-2xl mx-auto text-gray-300">
         I graduated with a degree in Computer Science & Engineering and have been working in
         software development ever since. My passion lies in creating efficient, scalable, and
-        user-friendly web applications using cutting-edge technologies.
+        user-friendly applications using cutting-edge technologies.
       </p>
     </div>
   </section>
 
-  {/* Brands Section */}
-  <section class='bg-gray-800 overflow-hidden'>
-    <h4 class='mt-8 -mb-4 text-xl font-medium text-center text-gray-200'>Past Clients</h4>
-    <div class='container mx-auto px-4'>
-      <div class='overflow-hidden relative h-[190px] w-full'>
+  <section class="bg-gray-800 overflow-hidden">
+    <h4 class="mt-8 -mb-4 text-xl font-medium text-center text-gray-200">Past Clients</h4>
+    <div class="container mx-auto px-4">
+      <div class="overflow-hidden relative h-[190px] w-full">
         <div
-          class='flex absolute left-0 [--scroll-diff:-300%] md:[--scroll-diff:-100%] justify-center h-full gap-1 w-[200%] animate-slide hover:pause'
+          class="flex absolute left-0 [--scroll-diff:-300%] md:[--scroll-diff:-100%] justify-center h-full gap-1 w-[200%] animate-slide hover:pause"
         >
           {
             brandLogos.map(({ imgUrl, title, className }) => (
-              <div class='flex items-center mx-8' style={{ filter: 'saturate(0%)' }}>
+              <div class="flex items-center mx-8" style={{ filter: "saturate(0%)" }}>
                 <img src={imgUrl} alt={title} class={className} />
               </div>
             ))
           }
           {
             brandLogos.map(({ imgUrl, title, className }) => (
-              <div class='flex items-center mx-8' style={{ filter: 'saturate(0%)' }}>
+              <div class="flex items-center mx-8" style={{ filter: "saturate(0%)" }}>
                 <img src={imgUrl} alt={title} class={className} />
               </div>
             ))
@@ -79,16 +74,40 @@ const brandLogos = [
     </div>
   </section>
 
-  {/* Services Section */}
-  <section id='services' class='py-20 bg-gray-900'>
-    <div class='container mx-auto px-4'>
-      <h3 class='text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-white'>Services</h3>
-      <p class='text-base md:text-lg text-center max-w-2xl mx-auto text-gray-300'>
-        I offer a range of software consulting services, specializing in TypeScript and React. From
-        building responsive web applications to creating robust backend systems, I'm here to bring
-        your ideas to life.
-      </p>
-      {/* Add more detailed service descriptions here if needed */}
+  <section id="services" class="py-20 bg-gray-900 text-gray-300">
+    <div class="container mx-auto px-4">
+      <h3 class="text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8">Services</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div
+          class="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-teal-500/50 transition-colors"
+        >
+          <h4 class="text-xl font-bold text-white mb-3">Full-Stack Architecture</h4>
+          <p class="text-sm md:text-base">
+            Years of experience writing software across backend (.NET, Node, Ruby, Elixir, PHP) and
+            frontend (React, Svelte, Vue) technologies.
+          </p>
+        </div>
+
+        <div
+          class="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-teal-500/50 transition-colors"
+        >
+          <h4 class="text-xl font-bold text-white mb-3">Platform Migration</h4>
+          <p class="text-sm md:text-base">
+            Helping companies transition from legacy PHP or Ruby monoliths to scalable, distributed
+            C# services.
+          </p>
+        </div>
+
+        <div
+          class="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-teal-500/50 transition-colors"
+        >
+          <h4 class="text-xl font-bold text-white mb-3">Database Architecture</h4>
+          <p class="text-sm md:text-base">
+            Schema design and optimization for PostgreSQL, MySQL, and SQLite.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 </Layout>
