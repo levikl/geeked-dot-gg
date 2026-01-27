@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
-    "@astrojs/tailwind": "^5.1.1",
+    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/tailwind": "^6.0.2",
     "@fontsource-variable/dancing-script": "^5.1.0",
     "@fontsource-variable/recursive": "^5.1.0",
-    "astro": "^4.15.8",
-    "tailwindcss": "^3.4.12",
+    "@tailwindcss/postcss": "^4.1.18",
+    "astro": "^5.16.15",
+    "astro-robots-txt": "^1.0.0",
+    "tailwindcss": "^3.4.19",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.6.2"
   },
