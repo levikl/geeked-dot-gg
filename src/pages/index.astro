@@ -11,51 +11,90 @@ const brandLogos = [
   { imgUrl: "/cmm.svg", title: "CoverMyMeds", className: "min-w-[100px] w-[200px]" },
   { imgUrl: "/bitfreighter.svg", title: "bitfreighter", className: "min-w-[100px] w-[100px]" },
 ];
+
+const services = [
+  {
+    number: "01",
+    title: "full-stack ninja",
+    description:
+      "years of production experience across backend and frontend, from API design to component trees. comfortable wherever the problem lives.",
+    tags: [".NET", "Node", "PHP", "Ruby", "Elixir", "React", "Svelte", "Vue"],
+  },
+  {
+    number: "02",
+    title: "platform migration",
+    description:
+      "here to help your team move off legacy monoliths and onto scalable, distributed services without the big-bang rewrite.",
+    tags: [],
+  },
+  {
+    number: "03",
+    title: "db architecture",
+    description: "schema design, query optimization, and data modeling.",
+    tags: ["PostgreSQL", "MySQL", "SQLite"],
+  },
+];
 ---
 
 <Layout title="Home">
-  <section class="bg-gradient-to-r from-teal-600 to-cyan-700 text-white py-20">
-    <div class="container mx-auto flex justify-between px-4">
-      <div class="flex flex-col justify-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Hey, I'm Levi 👋</h2>
-        <p class="text-lg md:text-xl mb-8">Software consultant</p>
-        <div class="space-x-4">
-          <a
-            href="mailto:levikl@geeked.gg"
-            class="border border-gray-800 bg-gray-800 text-teal-400 hover:text-teal-200 px-6 py-2 rounded-full font-semibold hover:bg-gray-700 transition-colors"
-          >
-            Contact me
-          </a>
-          <a
-            href="#services"
-            class="border border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white/10 hover:border-teal-300 hover:text-teal-300 transition-colors"
-          >
-            Services
-          </a>
-        </div>
+  <!-- Hero -->
+  <section class="relative bg-gray-950 text-white flex items-center overflow-hidden">
+    <div class="dot-grid absolute inset-0 pointer-events-none"></div>
+    <div
+      class="absolute top-1/3 -left-40 w-[600px] h-[600px] bg-teal-500/[0.06] rounded-full blur-[140px] pointer-events-none"
+    >
+    </div>
+    <div
+      class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-cyan-500/[0.04] rounded-full blur-[100px] pointer-events-none"
+    >
+    </div>
+
+    <div class="relative container mx-auto px-4 py-10 md:py-14">
+      <p class="mono text-teal-400 text-sm mb-6 flex items-center gap-2">
+        <span class="text-gray-600">~/geeked.gg</span>
+        <span class="text-gray-500">$</span>
+        <span>whoami</span>
+      </p>
+
+      <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05] mb-6 whitespace-nowrap cursor-default">
+        <span class="text-gray-100">hey, i'm </span><span class="text-teal-400">Levi.</span><span
+          class="inline-block relative top-[0.15em] w-[0.4em] h-[0.8em] bg-teal-400 ml-2 align-text-top animate-blink"
+        ></span>
+      </h2>
+
+      <div class="mono text-gray-400 text-sm md:text-base mb-8 space-y-1">
+        <p><span class="text-gray-600">// </span>independent software consultant</p>
+        <p><span class="text-gray-600">// </span>full-stack · distributed systems · database architecture</p>
+      </div>
+
+      <div class="flex flex-wrap gap-4 items-center">
+        <a
+          href="mailto:levikl@geeked.gg"
+          class="mono flex justify-center items-center align-middle bg-teal-500 hover:bg-teal-400 border border-teal-500 hover:border-teal-400 text-gray-950 font-bold px-6 py-3 text-sm transition-colors duration-200"
+        >
+          get in touch
+        </a>
+        <a
+          href="#services"
+	  class="mono flex items-center justify-center align-middle border border-gray-700 hover:border-teal-500/50 text-gray-400 hover:text-white px-6 py-3 text-sm font-bold transition-colors duration-200"
+        >
+          services
+        </a>
       </div>
     </div>
   </section>
 
-  <section id="about" class="py-20 bg-gray-900">
+  <!-- Logo carousel -->
+  <section class="bg-gray-950 border-y border-gray-800/60">
     <div class="container mx-auto px-4">
-      <h3 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center text-white">About Me</h3>
-      <p class="text-base md:text-lg text-center max-w-2xl mx-auto text-gray-300">
-        I graduated with a degree in Computer Science & Engineering and have been working in
-        software development ever since. My passion lies in creating efficient, scalable, and
-        user-friendly applications using cutting-edge technologies.
-      </p>
-    </div>
-  </section>
-
-  <section class="bg-gray-800 overflow-hidden">
-    <h4 class="mt-8 -mb-4 text-xl font-medium text-center text-gray-200">Past Clients</h4>
-    <div class="container mx-auto px-4">
-      <div class="relative h-[190px] w-full overflow-hidden">
+      <p class="mono text-teal-400/50 text-xs tracking-widest pt-8 pb-2">// past clients</p>
+      <div
+        class="relative h-[170px] overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+      >
         <div class="flex h-full w-max animate-slide hover:[animation-play-state:paused]">
           {
             [...brandLogos, ...brandLogos, ...brandLogos, ...brandLogos].map(({ imgUrl, title, className }) => (
-              <div class="flex items-center mx-8" style={{ filter: "saturate(0%)" }}>
+              <div class="flex items-center mx-10" style={{ filter: "saturate(0%) brightness(0.55)" }}>
                 <img src={imgUrl} alt={title} class={className} />
               </div>
             ))
@@ -65,39 +104,30 @@ const brandLogos = [
     </div>
   </section>
 
-  <section id="services" class="py-20 bg-gray-900 text-gray-300">
+  <!-- Services -->
+  <section id="services" class="py-24 bg-gray-950 text-gray-300">
     <div class="container mx-auto px-4">
-      <h3 class="text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8">Services</h3>
+      <div class="mb-12">
+        <p class="mono text-teal-400 text-sm mb-3">// services</p>
+      </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        <div
-          class="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-teal-500/50 transition-colors"
-        >
-          <h4 class="text-xl font-bold text-white mb-3">Full-Stack Architecture</h4>
-          <p class="text-sm md:text-base">
-            Years of experience writing software across backend (.NET, Node, Ruby, Elixir, PHP) and
-            frontend (React, Svelte, Vue) technologies.
-          </p>
-        </div>
-
-        <div
-          class="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-teal-500/50 transition-colors"
-        >
-          <h4 class="text-xl font-bold text-white mb-3">Platform Migration</h4>
-          <p class="text-sm md:text-base">
-            Helping companies transition from legacy PHP or Ruby monoliths to scalable, distributed
-            C# services.
-          </p>
-        </div>
-
-        <div
-          class="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-teal-500/50 transition-colors"
-        >
-          <h4 class="text-xl font-bold text-white mb-3">Database Architecture</h4>
-          <p class="text-sm md:text-base">
-            Schema design and optimization for PostgreSQL, MySQL, and SQLite.
-          </p>
-        </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-800/40 border border-gray-800/40">
+        {
+          services.map(({ number, title, description, tags }) => (
+            <div class="group bg-gray-950 p-8 hover:bg-gray-900/60 transition-colors duration-300">
+              <div class="mono text-teal-500/50 text-xs mb-5">{number}.</div>
+              <h4 class="text-lg font-bold text-white mb-3">{title}</h4>
+              <p class="text-sm text-gray-400 leading-relaxed mb-6">{description}</p>
+              <div class="flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <span class="mono text-xs text-teal-400/60 border border-teal-500/20 bg-teal-500/[0.04] px-2 py-0.5">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>

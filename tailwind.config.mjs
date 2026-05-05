@@ -6,11 +6,16 @@ export default {
     extend: {
       animation: {
         slide: "slide 20s linear infinite",
+        blink: "blink 1s step-end infinite",
       },
       keyframes: {
         slide: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-25%)" },
+        },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
         },
       },
       fontFamily: {
@@ -23,7 +28,6 @@ export default {
           "Helvetica Neue",
           "Arial",
         ],
-        "dancing-script": ['"Dancing Script Variable"', "cursive"],
       },
       borderRadius: {
         lg: "var(--radius)",

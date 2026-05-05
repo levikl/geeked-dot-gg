@@ -67,18 +67,19 @@
   }
 }
 
-@layer components {
-  .sticky-header {
-    @apply py-4 transition-all duration-200 ease-out;
-  }
-
-  .sticky-header.scrolled {
-    @apply py-2;
-  }
-}
 
 @layer utilities {
   .pause {
     animation-play-state: paused;
   }
+}
+
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.mono {
+  font-variation-settings: "MONO" 1, "CASL" 0;
+  letter-spacing: 0.02em;
 }
