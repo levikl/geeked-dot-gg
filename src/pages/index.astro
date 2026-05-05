@@ -51,19 +51,10 @@ const brandLogos = [
   <section class="bg-gray-800 overflow-hidden">
     <h4 class="mt-8 -mb-4 text-xl font-medium text-center text-gray-200">Past Clients</h4>
     <div class="container mx-auto px-4">
-      <div class="overflow-hidden relative h-[190px] w-full">
-        <div
-          class="flex absolute left-0 [--scroll-diff:-300%] md:[--scroll-diff:-100%] justify-center h-full gap-1 w-[200%] animate-slide hover:pause"
-        >
+      <div class="relative h-[190px] w-full overflow-hidden">
+        <div class="flex h-full w-max animate-slide hover:[animation-play-state:paused]">
           {
-            brandLogos.map(({ imgUrl, title, className }) => (
-              <div class="flex items-center mx-8" style={{ filter: "saturate(0%)" }}>
-                <img src={imgUrl} alt={title} class={className} />
-              </div>
-            ))
-          }
-          {
-            brandLogos.map(({ imgUrl, title, className }) => (
+            [...brandLogos, ...brandLogos, ...brandLogos, ...brandLogos].map(({ imgUrl, title, className }) => (
               <div class="flex items-center mx-8" style={{ filter: "saturate(0%)" }}>
                 <img src={imgUrl} alt={title} class={className} />
               </div>
