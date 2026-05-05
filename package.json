@@ -13,7 +13,6 @@
     "@astrojs/check": "^0.9.3",
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/tailwind": "^6.0.2",
-    "@fontsource-variable/dancing-script": "^5.1.0",
     "@fontsource-variable/recursive": "^5.1.0",
     "@tailwindcss/postcss": "^4.1.18",
     "astro": "^5.16.15",
