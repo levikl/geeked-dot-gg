@@ -283,5 +283,5 @@ Data.services = [{ number : "01", title : "full-stack ninja", description : "yea
 Markup.VOID = ["area","base","br","col","embed","hr","img","input","link","meta","source","track","wbr"];
 Layout.cssVersion = "";
 Main.out = "dist";
-pages_Index.tickerScript = "(function(){\nvar strip=document.querySelector('.logo-strip');\nvar track=strip.querySelector('.logo-strip__track');\nvar copy=track.firstElementChild.getBoundingClientRect().width;\nif(!copy)return;\nvar lap=20000;\nvar x=0,last=null;\ntrack.style.animation='none';\nfunction step(now){\nif(last!==null&&!strip.matches(':hover'))x=(x+(now-last)*copy/lap)%copy;\nlast=now;\ntrack.style.transform='translate3d(-'+x+'px,0,0)';\nrequestAnimationFrame(step);\n}\nrequestAnimationFrame(step);\n})();";
+pages_Index.tickerScript = "(function(){\nvar strip=document.querySelector('.logo-strip');\nvar track=strip.querySelector('.logo-strip__track');\nvar copy=track.firstElementChild.getBoundingClientRect().width;\nif(!copy)return;\nvar lap=20000;\nvar x=0,last=null;\ntrack.style.animation='none';\nfunction step(now){\nif(last!==null&&!strip.matches(':hover'))x=(x+Math.min(now-last,50)*copy/lap)%copy;\nlast=now;\ntrack.style.transform='translate3d(-'+x+'px,0,0)';\nrequestAnimationFrame(step);\n}\nrequestAnimationFrame(step);\n})();";
 Main.main();

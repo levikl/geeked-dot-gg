@@ -67,7 +67,8 @@ class Index {
 	 * animation. Safari shows a one-frame flicker when a CSS keyframe
 	 * animation wraps; stepping the transform ourselves does not. The CSS
 	 * animation stays as the fallback when scripts are off. Pauses while the
-	 * strip is hovered, matching the CSS fallback.
+	 * strip is hovered, matching the CSS fallback. The per-frame step is
+	 * capped so a main-thread stall resumes as a short pause, not a jump.
 	 */
 	static var tickerScript = "(function(){
 var strip=document.querySelector('.logo-strip');
@@ -78,7 +79,7 @@ var lap=20000;
 var x=0,last=null;
 track.style.animation='none';
 function step(now){
-if(last!==null&&!strip.matches(':hover'))x=(x+(now-last)*copy/lap)%copy;
+if(last!==null&&!strip.matches(':hover'))x=(x+Math.min(now-last,50)*copy/lap)%copy;
 last=now;
 track.style.transform='translate3d(-'+x+'px,0,0)';
 requestAnimationFrame(step);

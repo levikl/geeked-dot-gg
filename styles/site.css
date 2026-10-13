@@ -64,7 +64,9 @@ img { max-width: 100%; height: auto; }
 /* ---------- hero ---------- */
 .hero { position: relative; display: flex; align-items: center; overflow: hidden; background: var(--ink); color: #fff; }
 .hero__dots { position: absolute; inset: 0; pointer-events: none; }
-.hero__glow { position: absolute; border-radius: 9999px; pointer-events: none; }
+/* Own layers for the glows and caret: the blur is rasterised once, and the caret blink is a compositor
+   opacity change instead of a hero repaint that stalled the script-driven ticker on iPhone. */
+.hero__glow { position: absolute; border-radius: 9999px; pointer-events: none; will-change: transform; }
 .hero__glow--orange { top: 33.333333%; left: -10rem; width: 600px; height: 600px; background: rgba(249,115,22,.06); filter: blur(140px); }
 .hero__glow--amber { bottom: 0; right: 0; width: 400px; height: 400px; background: rgba(245,158,11,.04); filter: blur(100px); }
 .hero__inner { position: relative; padding-top: 2.5rem; padding-bottom: 2.5rem; }
@@ -80,6 +82,7 @@ img { max-width: 100%; height: auto; }
   display: inline-block; margin-left: .375rem; color: var(--orange-400);
   transform: translateY(-.05em) scaleX(.85) scaleY(.9);
   animation: blink 1s step-end infinite;
+  will-change: opacity;
 }
 
 .hero__comments { display: flex; flex-direction: column; gap: .25rem; margin-bottom: 2rem; color: var(--gray-400); font-size: .875rem; line-height: 1.25rem; }
