@@ -1,7 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+/** @type {import("tailwindcss").Config} */
+module.exports = {
   darkMode: ["class"],
-  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  content: ["./src/**/*.hx", "./res/**/*.html"],
   theme: {
     extend: {
       animation: {
@@ -78,5 +78,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };
