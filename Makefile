@@ -10,19 +10,16 @@ export BROWSERSLIST_IGNORE_OLD_DATA := 1
 TW_FLAGS   := -c tailwind.config.js -i styles/globals.css -o dist/styles.css
 HAXE       ?= haxe
 
-.PHONY: build html css assets dev clean distclean
+.PHONY: build html css dev clean distclean
 
 # html wipes dist/, so it must run before css and assets.
-build: html css assets
+build: html css
 
 html:
 	$(HAXE) build.hxml
 
 css: $(TW)
 	$(TW) $(TW_FLAGS) --minify
-
-assets:
-	mkdir -p dist && cp -R public/. dist/
 
 clean:
 	rm -rf dist
