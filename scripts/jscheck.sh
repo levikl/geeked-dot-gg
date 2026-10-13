@@ -15,3 +15,16 @@ rm -rf dist-js
 node "$JS" dist-js > /dev/null
 diff -r dist dist-js
 echo "jscheck: node output identical to haxe output"
+
+# The build stamp must come out identical from both targets when the env is set.
+export CF_PAGES_COMMIT_SHA=0123456789abcdef0123456789abcdef01234567 CF_PAGES_BRANCH=jscheck
+haxe build.hxml > /dev/null
+rm -rf dist-js
+node "$JS" dist-js > /dev/null
+diff -r dist dist-js
+grep -q 'commit/0123456789abcdef0123456789abcdef01234567"' dist/index.html && grep -q '>0123456</a>' dist/index.html || { echo "stamp missing from index.html"; exit 1; }
+grep -q '"source":"cloudflare"' dist/build.json || { echo "build.json not stamped"; exit 1; }
+unset CF_PAGES_COMMIT_SHA CF_PAGES_BRANCH
+haxe build.hxml > /dev/null
+rm -rf dist-js
+echo "jscheck: build stamp round-trips through both targets"

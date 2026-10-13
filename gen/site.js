@@ -1,3 +1,33 @@
+class Build {
+	static info() {
+		return { sha : Build.first(["CF_PAGES_COMMIT_SHA","WORKERS_CI_COMMIT_SHA"]), branch : Build.first(["CF_PAGES_BRANCH","WORKERS_CI_BRANCH"]), url : Io.env("CF_PAGES_URL")};
+	}
+	static short(sha) {
+		return sha.substring(0,7);
+	}
+	static json(b) {
+		return "{\"commit\":" + Build.str(b.sha) + ",\"branch\":" + Build.str(b.branch) + ",\"url\":" + Build.str(b.url) + ",\"source\":" + (b.sha != null ? "\"cloudflare\"" : "\"local\"") + "}\n";
+	}
+	static str(s) {
+		if(s == null) {
+			return "null";
+		} else {
+			return "\"" + s.split("\\").join("\\\\").split("\"").join("\\\"") + "\"";
+		}
+	}
+	static first(names) {
+		var _g = 0;
+		while(_g < names.length) {
+			var n = names[_g];
+			++_g;
+			var v = Io.env(n);
+			if(v != null && v != "") {
+				return v;
+			}
+		}
+		return null;
+	}
+}
 class Data {
 }
 class Markup {
@@ -83,6 +113,9 @@ class Io {
 	static arg() {
 		return process.argv[2];
 	}
+	static env(name) {
+		return process.env[name];
+	}
 	static log(msg) {
 		console.log(msg);
 	}
@@ -97,8 +130,13 @@ class Layout {
 	static githubIcon() {
 		return "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon\">" + "<path d=\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"></path>" + "<path d=\"M9 18c-4.51 2-5-2-7-2\"></path>" + "</svg>";
 	}
+	static buildStamp() {
+		var b = Build.info();
+		var inner = b.sha == null ? Markup.escape("local",false) : Markup.el("a",[Markup.attr("href","https://github.com/levikl/geeked-dot-gg" + "/commit/" + b.sha),Markup.attr("title",b.branch)],[Markup.escape(Build.short(b.sha),false)]);
+		return Markup.el("div",[Markup.attr("class","site-footer__build mono")],[Markup.escape("build ",false),inner]);
+	}
 	static footer() {
-		return Markup.el("footer",[Markup.attr("class","site-footer")],[Markup.el("div",[Markup.attr("class","container site-footer__inner")],[Markup.el("div",[],[Markup.escape("© Geeked LLC - Levi Klingler 2026",false)]),Markup.el("div",[],[Markup.el("a",[Markup.attr("href","/privacy-policy")],[Markup.escape(" Privacy Policy ",false)])])])]);
+		return Markup.el("footer",[Markup.attr("class","site-footer")],[Markup.el("div",[Markup.attr("class","container site-footer__inner")],[Markup.el("div",[],[Markup.escape("© Geeked LLC - Levi Klingler 2026",false)]),Layout.buildStamp(),Markup.el("div",[],[Markup.el("a",[Markup.attr("href","/privacy-policy")],[Markup.escape(" Privacy Policy ",false)])])])]);
 	}
 }
 class Main {
@@ -114,6 +152,7 @@ class Main {
 		Main.write("privacy-policy/index.html",pages_PrivacyPolicy.render());
 		Main.write("sitemap.xml",Seo.sitemap(["/","/privacy-policy/"]));
 		Main.write("robots.txt",Seo.robots());
+		Main.write("build.json",Build.json(Build.info()));
 		Main.copyDir("public",Main.out);
 		Main.copy("styles/site.css",Main.out + "/site.css");
 	}

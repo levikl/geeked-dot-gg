@@ -21,6 +21,7 @@ that hosts without Haxe (Cloudflare) can build the site with plain `node`. See "
 | `make build`    | Generate `dist/` (HTML, sitemap, robots, stylesheet, assets)                |
 | `make js`       | Recompile the generator to `gen/site.js` (do this after any source change)  |
 | `make js-check` | Verify `gen/site.js` has no Haxe traces and reproduces `dist/` under node   |
+| `make verify URL=https://geeked.gg` | Confirm a deployment was built by the Node script at local HEAD |
 | `make dev`      | Build, then serve `dist/` at `http://localhost:4321`                        |
 | `make clean`    | Remove `dist/` and `dist-js/`                                               |
 
@@ -79,6 +80,22 @@ No `package.json` is needed; the script uses only Node's built-in `fs`. `gen/sit
 from `src/` by Haxe, so after changing anything under `src/`, `res/`, `styles/` or `public/`, run
 `make js` and commit the result alongside. CI runs `make js-check`, which fails if the committed
 script no longer reproduces the Haxe build.
+
+### Build stamp
+
+The footer carries a build stamp. Inside a Cloudflare build it reads `build <sha>` and links to
+that commit on GitHub; everywhere else it reads `build local`. The generator also writes
+`/build.json` with `commit`, `branch`, `url` and `source` (`cloudflare` or `local`). The values come
+from the `CF_PAGES_*` (Pages) or `WORKERS_CI_*` (Workers Builds) variables Cloudflare injects, so
+nothing about the stamp depends on which build of the generator ran or on the clock, and local
+Haxe and local Node builds stay byte-identical. To simulate it locally:
+
+```sh
+CF_PAGES_COMMIT_SHA=$(git rev-parse HEAD) CF_PAGES_BRANCH=main make build
+```
+
+After a deploy, `make verify URL=https://geeked.gg` (or a preview URL) fetches `/build.json`,
+checks the commit matches local `HEAD`, and checks the footer stamp is on the home page.
 
 `.github/workflows/build.yml` runs the Haxe build, the `js-check`, and a compile-only check of the
 JS target on current Haxe, and uploads `dist/` as an artifact.

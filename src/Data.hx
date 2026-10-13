@@ -3,6 +3,7 @@ typedef Service = {number:String, title:String, description:String, tags:Array<S
 
 class Data {
 	public static inline var SITE = "https://geeked.gg";
+	public static inline var REPO = "https://github.com/levikl/geeked-dot-gg";
 	public static inline var TITLE_PREFIX = "Geeked LLC | ";
 
 	public static var brandLogos:Array<Logo> = [

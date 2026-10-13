@@ -132,6 +132,9 @@ img { max-width: 100%; height: auto; }
   font-size: .75rem; line-height: 1rem;
 }
 .site-footer a:hover { text-decoration: underline; }
+.site-footer__build { color: var(--gray-500); font-size: .75rem; line-height: 1rem; }
+.site-footer__build a { color: var(--gray-400); }
+.site-footer__build a:hover { color: var(--teal-400); }
 
 /* ---------- legal (privacy policy) ---------- */
 .legal {
