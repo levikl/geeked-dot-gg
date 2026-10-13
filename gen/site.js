@@ -198,34 +198,26 @@ class pages_Index {
 		var tmp3 = [Markup.attr("class","logo-strip")];
 		var tmp4 = [Markup.attr("class","logo-strip__track")];
 		var _g = [];
-		var _g1 = 0;
-		var _g2 = Data.brandLogos;
-		while(_g1 < _g2.length) {
-			var l = _g2[_g1];
-			++_g1;
-			_g.push(Markup.el("div",[Markup.attr("class",l.wide ? "logo logo--wide" : "logo")],[Markup.el("img",[Markup.attr("src",l.imgUrl),Markup.attr("alt",l.title)])]));
+		var tmp5 = [Markup.attr("class","logo-strip__copy")];
+		var _g1 = [];
+		var _g2 = 0;
+		var _g3 = Data.brandLogos;
+		while(_g2 < _g3.length) {
+			var l = _g3[_g2];
+			++_g2;
+			_g1.push(Markup.el("div",[Markup.attr("class",l.wide ? "logo logo--wide" : "logo")],[Markup.el("img",[Markup.attr("src",l.imgUrl),Markup.attr("alt",l.title)])]));
 		}
-		var _g11 = 0;
-		var _g21 = Data.brandLogos;
-		while(_g11 < _g21.length) {
-			var l1 = _g21[_g11];
-			++_g11;
-			_g.push(Markup.el("div",[Markup.attr("class",l1.wide ? "logo logo--wide" : "logo")],[Markup.el("img",[Markup.attr("src",l1.imgUrl),Markup.attr("alt",l1.title)])]));
+		_g.push(Markup.el("div",tmp5,_g1));
+		var tmp6 = [Markup.attr("class","logo-strip__copy")];
+		var _g11 = [];
+		var _g21 = 0;
+		var _g31 = Data.brandLogos;
+		while(_g21 < _g31.length) {
+			var l1 = _g31[_g21];
+			++_g21;
+			_g11.push(Markup.el("div",[Markup.attr("class",l1.wide ? "logo logo--wide" : "logo")],[Markup.el("img",[Markup.attr("src",l1.imgUrl),Markup.attr("alt",l1.title)])]));
 		}
-		var _g12 = 0;
-		var _g22 = Data.brandLogos;
-		while(_g12 < _g22.length) {
-			var l2 = _g22[_g12];
-			++_g12;
-			_g.push(Markup.el("div",[Markup.attr("class",l2.wide ? "logo logo--wide" : "logo")],[Markup.el("img",[Markup.attr("src",l2.imgUrl),Markup.attr("alt",l2.title)])]));
-		}
-		var _g13 = 0;
-		var _g23 = Data.brandLogos;
-		while(_g13 < _g23.length) {
-			var l3 = _g23[_g13];
-			++_g13;
-			_g.push(Markup.el("div",[Markup.attr("class",l3.wide ? "logo logo--wide" : "logo")],[Markup.el("img",[Markup.attr("src",l3.imgUrl),Markup.attr("alt",l3.title)])]));
-		}
+		_g.push(Markup.el("div",tmp6,_g11));
 		return Markup.el("section",tmp,[Markup.el("div",tmp1,[tmp2,Markup.el("div",tmp3,[Markup.el("div",tmp4,_g)])])]);
 	}
 	static services() {

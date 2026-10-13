@@ -48,11 +48,13 @@ class Index {
 				el("p", [cls("clients__label mono")], [text("// past clients")]),
 				el("div", [cls("logo-strip")], [
 					el("div", [cls("logo-strip__track")], [
-						for (_ in 0...4)
-							for (l in Data.brandLogos)
-								el("div", [cls(l.wide ? "logo logo--wide" : "logo")], [
-									el("img", [src(l.imgUrl), alt(l.title)]),
-								])
+						for (_ in 0...2)
+							el("div", [cls("logo-strip__copy")], [
+								for (l in Data.brandLogos)
+									el("div", [cls(l.wide ? "logo logo--wide" : "logo")], [
+										el("img", [src(l.imgUrl), alt(l.title)]),
+									])
+							])
 					]),
 				]),
 			]),
