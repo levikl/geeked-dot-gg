@@ -8,8 +8,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -19,23 +17,15 @@ jobs:
       - uses: krdlab/setup-haxe@v2
         with:
           haxe-version: 4.3.7
+      - run: haxelib install hxnodejs 12.2.0 --quiet
+      # Reference build with the Haxe interpreter.
       - run: make build
+      # The committed Node build must be Haxe-trace-free and reproduce dist/ exactly.
+      - run: make js-check
+      # The sources must still compile for the JS target on current Haxe
+      # (output goes to a temp path; the committed gen/site.js is generated locally).
+      - run: haxe build-node.hxml -js "$RUNNER_TEMP/site.js"
       - uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  # Inert until the repo variable DEPLOY_PAGES is set to "true" (and public/CNAME is added).
-  deploy:
-    if: github.ref == 'refs/heads/main' && vars.DEPLOY_PAGES == 'true'
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4

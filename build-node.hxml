@@ -1,0 +1,9 @@
+-cp src
+-main Main
+-lib hxnodejs
+-D js-es=6
+-D js-classic
+-D source-header=
+-dce full
+--macro macro.Stealth.use()
+-js gen/site.js

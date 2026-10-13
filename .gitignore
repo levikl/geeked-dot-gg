@@ -1,5 +1,6 @@
 # build output
 dist/
+dist-js/
 
 # macOS-specific files
 .DS_Store
