@@ -89,7 +89,7 @@ class Io {
 }
 class Layout {
 	static page(title,body) {
-		return "<!DOCTYPE html>" + Markup.el("html",[Markup.attr("lang","en")],[Markup.el("head",[],[Markup.el("meta",[Markup.attr("charset","utf-8")]),Markup.el("link",[Markup.attr("rel","icon"),Markup.attr("type","image/svg+xml"),Markup.attr("href","/favicon.svg")]),Markup.el("meta",[Markup.attr("name","viewport"),Markup.attr("content","width=device-width")]),Markup.el("title",[],[Markup.escape("Geeked LLC | " + title,false)]),Markup.el("link",[Markup.attr("rel","stylesheet"),Markup.attr("href","/site.css")])]),Markup.el("body",[],[Markup.el("div",[Markup.attr("class","shell")],[Layout.header(),body,Layout.footer()])])]);
+		return "<!DOCTYPE html>" + Markup.el("html",[Markup.attr("lang","en")],[Markup.el("head",[],[Markup.el("meta",[Markup.attr("charset","utf-8")]),Markup.el("link",[Markup.attr("rel","icon"),Markup.attr("type","image/svg+xml"),Markup.attr("href","/favicon.svg")]),Markup.el("meta",[Markup.attr("name","viewport"),Markup.attr("content","width=device-width")]),Markup.el("title",[],[Markup.escape("Geeked LLC | " + title,false)]),Markup.el("link",[Markup.attr("rel","stylesheet"),Markup.attr("href","/site.css?v=" + Layout.cssVersion)])]),Markup.el("body",[],[Markup.el("div",[Markup.attr("class","shell")],[Layout.header(),body,Layout.footer()])])]);
 	}
 	static header() {
 		return Markup.el("header",[Markup.attr("class","site-header")],[Markup.el("div",[Markup.attr("class","container site-header__inner")],[Markup.el("a",[Markup.attr("href","/")],[Markup.el("h1",[Markup.attr("class","brand mono")],[Markup.el("span",[Markup.attr("class","brand__name")],[Markup.escape("geeked",false)]),Markup.el("span",[Markup.attr("class","brand__dot")],[Markup.escape(".",false)]),Markup.el("span",[Markup.attr("class","brand__tld")],[Markup.escape("gg",false)])])]),Markup.el("nav",[Markup.attr("class","site-nav")],[Markup.el("a",[Markup.attr("href","https://github.com/levikl"),Markup.attr("target","_blank"),Markup.attr("rel","noopener noreferrer"),Markup.attr("aria-label","GitHub")],[Layout.githubIcon()])])])]);
@@ -110,6 +110,7 @@ class Main {
 		Main.rmrf(Main.out);
 		Io.mkdir(Main.out);
 		Io.mkdir(Main.out + "/privacy-policy");
+		Layout.cssVersion = Main.hash(Io.read("styles/site.css"));
 		Main.write("index.html",pages_Index.render());
 		Main.write("privacy-policy/index.html",pages_PrivacyPolicy.render());
 		Main.write("sitemap.xml",Seo.sitemap(["/","/privacy-policy/"]));
@@ -162,6 +163,29 @@ class Main {
 	static copy(s,d) {
 		Io.copy(s,d);
 		Io.log("copied " + d);
+	}
+	static hash(s) {
+		var h = 0;
+		var _g = 0;
+		var _g1 = s.length;
+		while(_g < _g1) {
+			var i = _g++;
+			h = h * 31 + s.charCodeAt(i) & 16777215;
+		}
+		var hex = "";
+		hex = "0123456789abcdef".charAt(h & 15) + hex;
+		h >>= 4;
+		hex = "0123456789abcdef".charAt(h & 15) + hex;
+		h >>= 4;
+		hex = "0123456789abcdef".charAt(h & 15) + hex;
+		h >>= 4;
+		hex = "0123456789abcdef".charAt(h & 15) + hex;
+		h >>= 4;
+		hex = "0123456789abcdef".charAt(h & 15) + hex;
+		h >>= 4;
+		hex = "0123456789abcdef".charAt(h & 15) + hex;
+		h >>= 4;
+		return hex;
 	}
 }
 class Seo {
@@ -257,5 +281,6 @@ class pages_PrivacyPolicy {
 Data.brandLogos = [{ imgUrl : "/marathon.svg", title : "Marathon", wide : false},{ imgUrl : "/testdouble.svg", title : "Test Double", wide : false},{ imgUrl : "/trane.svg", title : "Trane Technologies", wide : false},{ imgUrl : "/amazon.svg", title : "Amazon", wide : false},{ imgUrl : "/honda.svg", title : "Honda", wide : false},{ imgUrl : "/jpmorgan.svg", title : "JPMorgan Chase & Co.", wide : true},{ imgUrl : "/cmm.svg", title : "CoverMyMeds", wide : true},{ imgUrl : "/bitfreighter.svg", title : "bitfreighter", wide : false}];
 Data.services = [{ number : "01", title : "full-stack ninja", description : "years of production experience across backend and frontend, from API design to component trees. comfortable wherever the problem lives.", tags : [".NET","Node","PHP","Ruby","Elixir","React","Svelte","Vue"]},{ number : "02", title : "platform migration", description : "here to help your team move off legacy monoliths and onto scalable, distributed services without the big-bang rewrite.", tags : []},{ number : "03", title : "db architecture", description : "schema design, query optimization, and data modeling.", tags : ["PostgreSQL","MySQL","SQLite"]}];
 Markup.VOID = ["area","base","br","col","embed","hr","img","input","link","meta","source","track","wbr"];
+Layout.cssVersion = "";
 Main.out = "dist";
 Main.main();

@@ -3,6 +3,13 @@ import Html.Markup.*;
 import Html.Attr.*;
 
 class Layout {
+	/**
+	 * Content hash of the stylesheet, set by Main before any page renders.
+	 * Appended to the stylesheet URL so a deploy never pairs new HTML with a
+	 * stylesheet the browser or CDN still has cached.
+	 */
+	public static var cssVersion = "";
+
 	public static function page(title:String, body:Html):Html {
 		return doc(el("html", [attr("lang", "en")], [
 			el("head", [], [
@@ -10,7 +17,7 @@ class Layout {
 				el("link", [attr("rel", "icon"), attr("type", "image/svg+xml"), href("/favicon.svg")]),
 				el("meta", [attr("name", "viewport"), attr("content", "width=device-width")]),
 				el("title", [], [text(Data.TITLE_PREFIX + title)]),
-				el("link", [attr("rel", "stylesheet"), href("/site.css")]),
+				el("link", [attr("rel", "stylesheet"), href("/site.css?v=" + cssVersion)]),
 			]),
 			el("body", [], [
 				el("div", [cls("shell")], [header(), body, footer()]),

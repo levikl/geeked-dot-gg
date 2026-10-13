@@ -16,6 +16,7 @@ class Main {
 		Io.mkdir(out);
 		Io.mkdir(out + "/privacy-policy");
 
+		Layout.cssVersion = hash(Io.read("styles/site.css"));
 		write("index.html", pages.Index.render());
 		write("privacy-policy/index.html", pages.PrivacyPolicy.render());
 		write("sitemap.xml", Seo.sitemap(["/", "/privacy-policy/"]));
@@ -60,5 +61,32 @@ class Main {
 	static function copy(s:String, d:String) {
 		Io.copy(s, d);
 		Io.log("copied " + d);
+	}
+
+	/**
+	 * Short content hash used to version the stylesheet URL. The state is kept
+	 * to 24 bits so the arithmetic never overflows on the interp or the JS
+	 * target, and the output is written by hand to avoid pulling std classes
+	 * into gen/site.js.
+	 */
+	static function hash(s:String):String {
+		var h = 0;
+		for (i in 0...s.length)
+			h = (h * 31 + charCode(s, i)) & 0xffffff;
+		var hex = "";
+		for (_ in 0...6) {
+			hex = "0123456789abcdef".charAt(h & 15) + hex;
+			h >>= 4;
+		}
+		return hex;
+	}
+
+	static inline function charCode(s:String, i:Int):Int {
+		#if js
+		// Plain charCodeAt; the typed call would drag HxOverrides into the output.
+		return js.Syntax.code("{0}.charCodeAt({1})", s, i);
+		#else
+		return s.charCodeAt(i);
+		#end
 	}
 }
