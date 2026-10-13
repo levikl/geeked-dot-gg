@@ -1,101 +1,169 @@
 # geeked.gg
 
-Personal portfolio site for Geeked LLC. A small Haxe program generates the static site into
-`dist/`; styling is a single hand-written stylesheet. There are no web-toolchain dependencies:
-the build needs only `haxe` and `make`.
+This is the code behind [geeked.gg](https://geeked.gg), a small personal website.
 
-The same generator is also compiled to a single Node script, `gen/site.js`, which is committed so
-that hosts without Haxe (Cloudflare) can build the site with plain `node`. See "Deploying" below.
+The website is just a few plain files: two HTML pages, one CSS file, some logo images, and a
+font. Nothing runs on a server. A little program writes those files out, and a host serves them.
 
-## Prerequisites
+The program is written in a language called **Haxe**. Haxe can be turned into other languages,
+and we use that trick later on.
 
-- Haxe 4.0 or newer (the generator deliberately avoids newer syntax; CI builds with 4.3.7)
-- `haxelib install hxnodejs 12.2.0` (Node externs, used only when compiling `gen/site.js`)
-- GNU make
-- python3, only for the local dev server; node, only for `make js-check`
+## The big picture
+
+Think of it like a recipe:
+
+1. **The ingredients** live in `src/` (the Haxe code), `res/` (a chunk of HTML), `styles/` (the
+   CSS) and `public/` (images and the font).
+2. **Cooking** means running the Haxe program. It mixes the ingredients and writes the finished
+   website into a folder called `dist/`.
+3. **Serving** means putting the `dist/` folder on the internet. A company called Cloudflare does
+   that for us.
+
+There's one twist. Cloudflare's computers don't have Haxe installed, but they do have Node (a way
+to run JavaScript). So we also keep a JavaScript copy of the program, `gen/site.js`, made by Haxe
+from the same source. Cloudflare runs that copy. Same recipe, different cook.
+
+## What you need on your computer
+
+- **Haxe**, version 4.0 or newer. The code on purpose avoids newer features so an older Haxe still
+  works.
+- One extra Haxe library, installed with `haxelib install hxnodejs 12.2.0`. You only need it when
+  making the JavaScript copy.
+- **make**, a tool that runs the commands below. Macs and Linux have it already.
+- **python3**, only for looking at the site in your browser. Macs have it.
+- **node**, only for the self-check described later.
 
 ## Commands
 
-| Command         | Action                                                                      |
-| :-------------- | :-------------------------------------------------------------------------- |
-| `make build`    | Generate `dist/` (HTML, sitemap, robots, stylesheet, assets)                |
-| `make js`       | Recompile the generator to `gen/site.js` (do this after any source change)  |
-| `make js-check` | Verify `gen/site.js` has no Haxe traces and reproduces `dist/` under node   |
-| `make verify URL=https://geeked.gg` | Confirm a deployment was built by the Node script at local HEAD |
-| `make dev`      | Build, then serve `dist/` at `http://localhost:4321`                        |
-| `make clean`    | Remove `dist/` and `dist-js/`                                               |
+Run these from the top folder of the project.
 
-`make dev` does not watch for changes. Re-run `make build` in another shell, or install `entr`
-and run `ls src/*.hx src/pages/*.hx res/*.html styles/*.css | entr make build`.
+| Type this                           | What happens                                                          |
+| :---------------------------------- | :-------------------------------------------------------------------- |
+| `make build`                        | Builds the website into `dist/`.                                      |
+| `make dev`                          | Builds, then shows the site at http://localhost:4321 in your browser. |
+| `make js`                           | Makes a fresh JavaScript copy of the program (`gen/site.js`).         |
+| `make js-check`                     | Checks that the JavaScript copy builds the exact same website.        |
+| `make verify URL=https://geeked.gg` | Checks that the live site was built from your latest commit.          |
+| `make clean`                        | Deletes the built files.                                              |
 
-## Layout
+`make dev` doesn't notice when you edit files. Change something, run `make build` again, then
+refresh the browser.
+
+## Where things are
 
 ```
-build.hxml            haxe arguments: compile src/ and run Main under --interp
-build-node.hxml       haxe arguments: compile src/ to gen/site.js for Node
-gen/site.js           committed Node build of the generator; regenerate with `make js`
-src/Main.hx           entry point; writes <out>/*.html, sitemap.xml, robots.txt, copies public/ and styles/
-                      (<out> defaults to dist/; an optional first argument overrides it)
-src/Io.hx             the only file/console access; calls Node's fs under the JS target, sys otherwise
-src/Html.hx           tiny HTML builder (el / text / raw; attributes and text are escaped)
-src/macro/Stealth.hx  post-generate cleanup so gen/site.js reads as hand-written Node
-src/Layout.hx         <html> shell, header, footer
-src/Data.hx           site constants, client logos, services
-src/Seo.hx            sitemap + robots
-src/pages/*.hx        one class per route, each with a static render()
-res/privacy-policy.html   static body of /privacy-policy, wrapped by Layout
-styles/site.css       the stylesheet: reset, tokens, one section per component, media queries
-public/               copied verbatim into dist/ (favicon, logos, fonts)
-scripts/jscheck.sh    the `make js-check` script
-scripts/htmlnorm.py   normalizes HTML for structural diffs; used when verifying migrations
+src/Main.hx            Start here. Writes every file into dist/.
+src/Layout.hx          The parts every page shares: the <html> wrapper, header and footer.
+src/pages/Index.hx     The home page.
+src/pages/PrivacyPolicy.hx   The privacy page. It just wraps res/privacy-policy.html.
+src/Data.hx            Facts: the site address, client logos, the list of services.
+src/Html.hx            Tiny helpers for building HTML without typos.
+src/Seo.hx             The sitemap and robots.txt (things search engines read).
+src/Build.hx           Reads the "build stamp" info (explained below).
+src/Io.hx              The only file that reads or writes files. Works in Haxe and in Node.
+src/macro/Stealth.hx   Tidies up the JavaScript copy so it reads like normal Node code.
+res/privacy-policy.html    The privacy policy text, as plain HTML.
+styles/site.css        All the styling.
+public/                Images and the font. Copied into dist/ unchanged.
+gen/site.js            The JavaScript copy of the program. Don't edit it by hand; run `make js`.
+build.hxml             Tells Haxe how to run the program directly.
+build-node.hxml        Tells Haxe how to make gen/site.js.
+scripts/jscheck.sh     What `make js-check` runs.
+scripts/verify.sh      What `make verify` runs.
+scripts/htmlnorm.py    A helper for comparing two HTML files. Rarely needed.
 ```
 
-## Adding a page
+## How a page is made
 
-1. Create `src/pages/NewPage.hx` with `public static function render():Html` that returns
-   `Layout.page("Title", body)`.
-2. In `src/Main.hx`, create the output directory, call
-   `write("new-page/index.html", pages.NewPage.render())`, and add `/new-page/` to the sitemap list.
-3. Add any new rules to `styles/site.css`. Class names are semantic (`.hero`, `.btn--primary`,
-   `.service-card__title`); there is no utility layer.
+Each page is a Haxe class with one function, `render()`, that returns HTML. Instead of typing
+raw HTML, you call small helpers:
+
+```haxe
+el("a", [href("/"), cls("btn")], [text("Home")])
+```
+
+That produces `<a href="/" class="btn">Home</a>`. The helper escapes anything that could break
+the page, so a `<` in your text can't accidentally become a tag. If you really do want raw HTML
+dropped in as-is, use `raw(...)`.
+
+### Adding a new page
+
+1. Make `src/pages/NewPage.hx`. Give it a `public static function render():Html` that returns
+   `Layout.page("Page Title", yourContent)`.
+2. In `src/Main.hx`, create its folder with `Io.mkdir(out + "/new-page")`, write it with
+   `write("new-page/index.html", pages.NewPage.render())`, and add `"/new-page/"` to the sitemap
+   list.
+3. Put any new styling in `styles/site.css`. Class names describe what things are, like `.hero`
+   or `.service-card__title`.
+4. Run `make build` and look at it. Then `make js` so the JavaScript copy knows about the page.
 
 ## Styling
 
-`styles/site.css` is copied to `dist/site.css` as-is, with no build step. It starts with a minimal
-reset and a `:root` token block (backgrounds, grays, teals), then one section per component, then
-the media queries. Breakpoints are 640, 768 and 1024px, plus 1280 and 1536 for `.container`. The
-`.mono` class switches the Recursive variable font to its monospace axis; the font file is vendored
-under `public/fonts/`.
+There's one CSS file and no build step for it. `styles/site.css` is copied to the website as-is.
+Inside, in order: a short reset, a block of colour variables, one section per part of the page,
+and the rules for different screen widths (phones first, then 640, 768 and 1024 pixels and up).
 
-## Deploying
+The site uses one font, Recursive, which can switch between a normal look and a monospace
+(typewriter) look. The `.mono` class flips it to monospace.
 
-Cloudflare (Pages, or Workers with static assets) builds the site from the committed Node script:
+## Putting it on the internet
 
-- Framework preset: none
-- Build command: `node gen/site.js`
-- Build output directory: `dist`
-- Root directory: `/`
+The site lives on **Cloudflare Pages**. Cloudflare watches this GitHub repository. Every time a
+commit lands on the `main` branch, Cloudflare builds the site and puts it on https://geeked.gg,
+usually in under a minute. Push any other branch and Cloudflare builds a preview copy at
+`https://<branch-name>.geeked-dot-gg.pages.dev` instead, so you can look before it goes live.
 
-No `package.json` is needed; the script uses only Node's built-in `fs`. `gen/site.js` is generated
-from `src/` by Haxe, so after changing anything under `src/`, `res/`, `styles/` or `public/`, run
-`make js` and commit the result alongside. CI runs `make js-check`, which fails if the committed
-script no longer reproduces the Haxe build.
+Cloudflare doesn't have Haxe, so it runs the JavaScript copy. These are the settings in the
+Cloudflare dashboard (Workers & Pages → geeked-dot-gg → Settings → Build):
 
-### Build stamp
+| Setting                | Value              |
+| :--------------------- | :----------------- |
+| Framework preset       | None               |
+| Build command          | `node gen/site.js` |
+| Build output directory | `dist`             |
+| Root directory         | (leave empty)      |
+| `NODE_VERSION`         | `22`               |
 
-The footer carries a build stamp. Inside a Cloudflare build it reads `build <sha>` and links to
-that commit on GitHub; everywhere else it reads `build local`. The generator also writes
-`/build.json` with `commit`, `branch`, `url` and `source` (`cloudflare` or `local`). The values come
-from the `CF_PAGES_*` (Pages) or `WORKERS_CI_*` (Workers Builds) variables Cloudflare injects, so
-nothing about the stamp depends on which build of the generator ran or on the clock, and local
-Haxe and local Node builds stay byte-identical. To simulate it locally:
+### The steps to ship a change
+
+1. Edit the files.
+2. `make build` and check it looks right (`make dev` to see it in a browser).
+3. `make js`, then `make js-check`. The check fails if you forgot `make js`, so you can't ship a
+   stale JavaScript copy by accident.
+4. Commit your changes **and** `gen/site.js` together. Push.
+5. Wait a minute, then `make verify URL=https://geeked.gg`.
+
+GitHub also runs steps 2 and 3 automatically on every push, so you'll get a red X if something is
+off.
+
+### The build stamp
+
+Look at the footer of the live site. It says `build` followed by a short code like `a34fd16`.
+That code is the ID of the exact commit the site was built from, and it links to that commit on
+GitHub. When you build on your own computer it just says `build local`.
+
+There's also a hidden page, https://geeked.gg/build.json, with the same info written out:
+
+```json
+{"commit":"<the full id>","branch":"main","url":"https://<something>.geeked-dot-gg.pages.dev","source":"cloudflare"}
+```
+
+How does the program know? Cloudflare tells it. While building, Cloudflare sets a couple of
+environment variables (`CF_PAGES_COMMIT_SHA` and `CF_PAGES_BRANCH`) and the program reads them.
+On your computer those don't exist, so you get `local`. You can pretend to be Cloudflare like
+this:
 
 ```sh
 CF_PAGES_COMMIT_SHA=$(git rev-parse HEAD) CF_PAGES_BRANCH=main make build
 ```
 
-After a deploy, `make verify URL=https://geeked.gg` (or a preview URL) fetches `/build.json`,
-checks the commit matches local `HEAD`, and checks the footer stamp is on the home page.
+`make verify` uses the stamp. It downloads `build.json` from the live site, checks that the commit
+matches the one you have checked out, and checks the stamp is really in the footer. If all three
+are true, you know the live site is your latest code and that Cloudflare built it.
 
-`.github/workflows/build.yml` runs the Haxe build, the `js-check`, and a compile-only check of the
-JS target on current Haxe, and uploads `dist/` as an artifact.
+## Why two copies of the program?
+
+Fair question. Haxe is the real source. The JavaScript copy exists only because Cloudflare can run
+Node but not Haxe. To make sure the copy never drifts, `make js-check` builds the site both ways
+and compares every file byte for byte. It also checks the JavaScript reads like ordinary Node
+code, with no leftovers from the conversion.
