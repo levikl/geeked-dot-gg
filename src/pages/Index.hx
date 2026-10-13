@@ -12,8 +12,8 @@ class Index {
 	static function hero():Html {
 		return el("section", [cls("hero")], [
 			el("div", [cls("dot-grid hero__dots")]),
-			el("div", [cls("hero__glow hero__glow--teal")]),
-			el("div", [cls("hero__glow hero__glow--cyan")]),
+			el("div", [cls("hero__glow hero__glow--orange")]),
+			el("div", [cls("hero__glow hero__glow--amber")]),
 			el("div", [cls("container hero__inner")], [
 				el("p", [cls("prompt mono")], [
 					el("span", [cls("prompt__cwd")], [text("~/geeked.gg")]),
