@@ -108,14 +108,16 @@ img { max-width: 100%; height: auto; }
 }
 .logo-strip::before { left: 0;  background: linear-gradient(to right, var(--ink), transparent); }
 .logo-strip::after  { right: 0; background: linear-gradient(to left,  var(--ink), transparent); }
-.logo-strip__track { display: flex; height: 100%; width: max-content; }
-/* Each copy is its own small compositor layer and travels exactly its own width, so the loop seam is exact. */
-.logo-strip__copy {
-  display: flex; flex: none; height: 100%;
+/* The homepage script steps the track's transform each frame (Safari flickers when a CSS keyframe
+   animation wraps). This animation is the no-script fallback: the track is exactly two copies wide,
+   so -50% is exactly one copy and the loop seam is pixel-exact. */
+.logo-strip__track {
+  display: flex; height: 100%; width: max-content;
   animation: slide 20s linear infinite;
   will-change: transform; backface-visibility: hidden;
 }
-.logo-strip:hover .logo-strip__copy { animation-play-state: paused; }
+.logo-strip:hover .logo-strip__track { animation-play-state: paused; }
+.logo-strip__copy { display: flex; flex: none; height: 100%; }
 .logo { display: flex; flex: none; align-items: center; margin: 0 40px; filter: saturate(0%) brightness(.55); }
 .logo img { width: 100px; min-width: 100px; }
 .logo--wide img { width: 200px; min-width: 200px; }
@@ -165,7 +167,7 @@ img { max-width: 100%; height: auto; }
 .container { width: 100%; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
 
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-@keyframes slide { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-100%, 0, 0); } }
+@keyframes slide { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 
 /* ---------- media queries ---------- */
 @media (min-width: 640px) {
