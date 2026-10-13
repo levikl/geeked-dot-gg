@@ -18,7 +18,6 @@ the host does not need Haxe.
 | `make dev`                          | Build and serve at http://localhost:4321 (no auto-reload) |
 | `make js`                           | Regenerate `gen/site.js`                                  |
 | `make js-check`                     | Confirm `gen/site.js` reproduces `dist/` byte for byte    |
-| `make verify URL=https://geeked.gg` | Confirm the live site was built from your current commit  |
 | `make clean`                        | Remove build output                                       |
 
 ## Where to edit
@@ -37,4 +36,3 @@ then run `make js`.
 2. `make js && make js-check`. CI runs the same check and fails on a stale `gen/site.js`.
 3. Commit source **and** `gen/site.js` together, push to `main`.
 4. The site deploys automatically within a minute or so.
-5. `make verify URL=https://geeked.gg`. `/build.json` records the commit the site was built from.

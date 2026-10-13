@@ -90,15 +90,6 @@ class Io {
 		#end
 	}
 
-	/** Environment variable, or null. */
-	public static function env(name:String):String {
-		#if js
-		return js.Node.process.env[name];
-		#else
-		return Sys.getEnv(name);
-		#end
-	}
-
 	public static function log(msg:String):Void {
 		#if js
 		js.Node.console.log(msg);

@@ -20,7 +20,6 @@ class Main {
 		write("privacy-policy/index.html", pages.PrivacyPolicy.render());
 		write("sitemap.xml", Seo.sitemap(["/", "/privacy-policy/"]));
 		write("robots.txt", Seo.robots());
-		write("build.json", Build.json(Build.info()));
 
 		copyDir("public", out);
 		copy("styles/site.css", out + "/site.css");

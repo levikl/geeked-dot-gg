@@ -1,30 +1,3 @@
-class Build {
-	static info() {
-		return { sha : Build.first(["CF_PAGES_COMMIT_SHA","WORKERS_CI_COMMIT_SHA"]), branch : Build.first(["CF_PAGES_BRANCH","WORKERS_CI_BRANCH"]), url : Io.env("CF_PAGES_URL")};
-	}
-	static json(b) {
-		return "{\"commit\":" + Build.str(b.sha) + ",\"branch\":" + Build.str(b.branch) + ",\"url\":" + Build.str(b.url) + ",\"source\":" + (b.sha != null ? "\"cloudflare\"" : "\"local\"") + "}\n";
-	}
-	static str(s) {
-		if(s == null) {
-			return "null";
-		} else {
-			return "\"" + s.split("\\").join("\\\\").split("\"").join("\\\"") + "\"";
-		}
-	}
-	static first(names) {
-		var _g = 0;
-		while(_g < names.length) {
-			var n = names[_g];
-			++_g;
-			var v = Io.env(n);
-			if(v != null && v != "") {
-				return v;
-			}
-		}
-		return null;
-	}
-}
 class Data {
 }
 class Markup {
@@ -110,9 +83,6 @@ class Io {
 	static arg() {
 		return process.argv[2];
 	}
-	static env(name) {
-		return process.env[name];
-	}
 	static log(msg) {
 		console.log(msg);
 	}
@@ -144,7 +114,6 @@ class Main {
 		Main.write("privacy-policy/index.html",pages_PrivacyPolicy.render());
 		Main.write("sitemap.xml",Seo.sitemap(["/","/privacy-policy/"]));
 		Main.write("robots.txt",Seo.robots());
-		Main.write("build.json",Build.json(Build.info()));
 		Main.copyDir("public",Main.out);
 		Main.copy("styles/site.css",Main.out + "/site.css");
 	}
