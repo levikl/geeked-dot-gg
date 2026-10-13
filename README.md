@@ -1,8 +1,8 @@
 # geeked.gg
 
 Static site generator for [geeked.gg](https://geeked.gg), written in Haxe. `make build` writes the
-site to `dist/`. Cloudflare Pages deploys it by running `gen/site.js`, a committed Node build of the
-same generator.
+site to `dist/`. Deployment runs `gen/site.js`, a committed Node build of the same generator, so
+the host does not need Haxe.
 
 ## Requirements
 
@@ -36,10 +36,6 @@ then run `make js`.
 1. `make build`, check it in the browser.
 2. `make js && make js-check`. CI runs the same check and fails on a stale `gen/site.js`.
 3. Commit source **and** `gen/site.js` together, push to `main`.
-4. Cloudflare deploys in about a minute. Other branches get a preview at
-   `https://<branch>.geeked-dot-gg.pages.dev`.
-5. `make verify URL=https://geeked.gg`. The footer and `/build.json` carry the commit the site was
-   built from, set from `CF_PAGES_COMMIT_SHA`.
-
-Cloudflare Pages build settings: framework preset None, build command `node gen/site.js`, output
-directory `dist`, `NODE_VERSION=22`.
+4. The site deploys automatically within a minute or so.
+5. `make verify URL=https://geeked.gg`. The footer and `/build.json` show the commit the site was
+   built from.
