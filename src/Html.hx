@@ -5,38 +5,32 @@
  * The abstracts hold only inline members; the real work lives in `Markup`.
  */
 abstract Html(String) {
-	public inline function new(s:String)
-		this = s;
-
 	@:to public inline function toString():String
 		return this;
 
 	/** Trusted markup, inserted verbatim. */
 	public static inline function raw(s:String):Html
-		return new Html(s);
+		return cast s;
 
 	/** Text node; escapes `&`, `<`, `>`. */
 	public static inline function text(s:String):Html
-		return new Html(Markup.escape(s, false));
+		return cast Markup.escape(s, false);
 
 	public static inline function empty():Html
-		return new Html("");
+		return cast "";
 
 	public static inline function doc(root:Html):Html
-		return new Html("<!DOCTYPE html>" + root);
+		return cast "<!DOCTYPE html>" + (root : String);
 }
 
 /** A pre-rendered ` name="value"` pair. Values are always escaped. */
 abstract Attr(String) to String {
-	inline function new(s:String)
-		this = s;
-
 	public static inline function attr(k:String, v:String):Attr
-		return new Attr(" " + k + "=\"" + Markup.escape(v, true) + "\"");
+		return cast Markup.attr(k, v);
 
 	/** Boolean attribute, e.g. `hidden`. */
 	public static inline function flag(k:String):Attr
-		return new Attr(" " + k);
+		return cast " " + k;
 
 	public static inline function cls(v:String):Attr
 		return attr("class", v);
@@ -57,6 +51,11 @@ abstract Attr(String) to String {
 class Markup {
 	static var VOID = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"];
 
+	/** ` name="value"` with the value escaped. */
+	public static function attr(k:String, v:String):String {
+		return " " + k + "=\"" + escape(v, true) + "\"";
+	}
+
 	public static function el(tag:String, ?attrs:Array<Attr>, ?children:Array<Html>):Html {
 		var s = "<" + tag;
 		if (attrs != null)
@@ -66,19 +65,19 @@ class Markup {
 		if (VOID.indexOf(tag) >= 0) {
 			if (children != null && children.length > 0)
 				fail("void element <" + tag + "> cannot have children");
-			return new Html(s);
+			return cast s;
 		}
 		if (children != null)
 			for (c in children)
 				s += (c : String);
-		return new Html(s + "</" + tag + ">");
+		return cast s + "</" + tag + ">";
 	}
 
 	public static function frag(children:Array<Html>):Html {
 		var s = "";
 		for (c in children)
 			s += (c : String);
-		return new Html(s);
+		return cast s;
 	}
 
 	/** Escapes `&`, `<`, `>` and, with `quotes`, `"` and `'`. */

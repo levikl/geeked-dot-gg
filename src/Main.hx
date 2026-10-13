@@ -1,8 +1,8 @@
 /**
  * Static site generator entry point. Run from the repo root.
  * Writes HTML, sitemap and robots into the output directory (default dist/),
- * then copies public/ and the stylesheet in. An optional first argument
- * overrides the output directory.
+ * then copies public/ and the stylesheet in. The Node build accepts an
+ * optional first argument that overrides the output directory.
  */
 class Main {
 	static var out = "dist";

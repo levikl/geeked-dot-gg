@@ -78,13 +78,15 @@ class Io {
 		#end
 	}
 
-	/** First command-line argument, or null. */
+	/**
+	 * First command-line argument, or null. Only the Node build takes one:
+	 * under `haxe --interp`, Sys.args() would return the compiler's own arguments.
+	 */
 	public static function arg():String {
 		#if js
 		return js.Node.process.argv[2];
 		#else
-		var a = Sys.args();
-		return a.length > 0 ? a[0] : null;
+		return null;
 		#end
 	}
 
