@@ -1,4 +1,4 @@
-typedef Logo = {imgUrl:String, title:String, className:String};
+typedef Logo = {imgUrl:String, title:String, wide:Bool};
 typedef Service = {number:String, title:String, description:String, tags:Array<String>};
 
 class Data {
@@ -6,14 +6,14 @@ class Data {
 	public static inline var TITLE_PREFIX = "Geeked LLC | ";
 
 	public static var brandLogos:Array<Logo> = [
-		{imgUrl: "/marathon.svg", title: "Marathon", className: "min-w-[100px] w-[100px]"},
-		{imgUrl: "/testdouble.svg", title: "Test Double", className: "min-w-[100px] w-[100px]"},
-		{imgUrl: "/trane.svg", title: "Trane Technologies", className: "min-w-[100px] w-[100px]"},
-		{imgUrl: "/amazon.svg", title: "Amazon", className: "min-w-[100px] w-[100px]"},
-		{imgUrl: "/honda.svg", title: "Honda", className: "min-w-[100px] w-[100px]"},
-		{imgUrl: "/jpmorgan.svg", title: "JPMorgan Chase & Co.", className: "min-w-[200px] w-[200px]"},
-		{imgUrl: "/cmm.svg", title: "CoverMyMeds", className: "min-w-[100px] w-[200px]"},
-		{imgUrl: "/bitfreighter.svg", title: "bitfreighter", className: "min-w-[100px] w-[100px]"},
+		{imgUrl: "/marathon.svg", title: "Marathon", wide: false},
+		{imgUrl: "/testdouble.svg", title: "Test Double", wide: false},
+		{imgUrl: "/trane.svg", title: "Trane Technologies", wide: false},
+		{imgUrl: "/amazon.svg", title: "Amazon", wide: false},
+		{imgUrl: "/honda.svg", title: "Honda", wide: false},
+		{imgUrl: "/jpmorgan.svg", title: "JPMorgan Chase & Co.", wide: true},
+		{imgUrl: "/cmm.svg", title: "CoverMyMeds", wide: true},
+		{imgUrl: "/bitfreighter.svg", title: "bitfreighter", wide: false},
 	];
 
 	public static var services:Array<Service> = [
