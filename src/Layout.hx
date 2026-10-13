@@ -47,20 +47,10 @@ class Layout {
 			+ '</svg>');
 	}
 
-	/** `build <sha>` linking to the commit when generated inside a Cloudflare build; `build local` otherwise. */
-	static function buildStamp():Html {
-		var b = Build.info();
-		var inner = b.sha == null
-			? text("local")
-			: el("a", [href(Data.REPO + "/commit/" + b.sha), attr("title", b.branch)], [text(Build.short(b.sha))]);
-		return el("div", [cls("site-footer__build mono")], [text("build "), inner]);
-	}
-
 	static function footer():Html {
 		return el("footer", [cls("site-footer")], [
 			el("div", [cls("container site-footer__inner")], [
 				el("div", [], [text("© Geeked LLC - Levi Klingler 2026")]),
-				buildStamp(),
 				el("div", [], [
 					el("a", [href("/privacy-policy")], [text(" Privacy Policy ")]),
 				]),

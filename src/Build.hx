@@ -13,10 +13,6 @@ class Build {
 		};
 	}
 
-	public static function short(sha:String):String {
-		return sha.substring(0, 7);
-	}
-
 	/** Body of build.json. Hand-built so the Node output stays free of std helpers. */
 	public static function json(b:BuildInfo):String {
 		return '{"commit":' + str(b.sha) + ',"branch":' + str(b.branch) + ',"url":' + str(b.url)
