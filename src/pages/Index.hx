@@ -1,6 +1,7 @@
 package pages;
 
 import Html.*;
+import Html.Markup.*;
 import Html.Attr.*;
 
 class Index {
