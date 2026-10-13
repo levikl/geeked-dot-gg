@@ -1,9 +1,6 @@
 # build output
 dist/
 
-# downloaded tailwind standalone binary
-tools/
-
 # macOS-specific files
 .DS_Store
 
