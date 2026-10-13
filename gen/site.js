@@ -232,7 +232,7 @@ class pages_Index {
 			_g1.push(Markup.el("div",[Markup.attr("class",l.wide ? "logo logo--wide" : "logo")],[Markup.el("img",[Markup.attr("src",l.imgUrl),Markup.attr("alt",l.title)])]));
 		}
 		_g.push(Markup.el("div",tmp5,_g1));
-		var tmp6 = [Markup.attr("class","logo-strip__copy")];
+		var tmp6 = [Markup.attr("class","logo-strip__copy"),Markup.attr("aria-hidden","true")];
 		var _g11 = [];
 		var _g21 = 0;
 		var _g31 = Data.brandLogos;
