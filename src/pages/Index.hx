@@ -66,8 +66,9 @@ class Index {
 	 * Drives the logo strip from requestAnimationFrame instead of the CSS
 	 * animation. Safari shows a one-frame flicker when a CSS keyframe
 	 * animation wraps; stepping the transform ourselves does not. The CSS
-	 * animation stays as the fallback when scripts are off. Pauses while the
-	 * strip is hovered, matching the CSS fallback.
+	 * animation stays as the fallback when scripts are off. Holds still while
+	 * the strip is hovered or while the user prefers reduced motion, matching
+	 * the CSS fallback.
 	 */
 	static var tickerScript = "(function(){
 var strip=document.querySelector('.logo-strip');
@@ -75,10 +76,11 @@ var track=strip.querySelector('.logo-strip__track');
 var copy=track.firstElementChild.getBoundingClientRect().width;
 if(!copy)return;
 var lap=20000;
+var still=window.matchMedia('(prefers-reduced-motion: reduce)');
 var x=0,last=null;
 track.style.animation='none';
 function step(now){
-if(last!==null&&!strip.matches(':hover'))x=(x+(now-last)*copy/lap)%copy;
+if(last!==null&&!still.matches&&!strip.matches(':hover'))x=(x+(now-last)*copy/lap)%copy;
 last=now;
 track.style.transform='translate3d(-'+x+'px,0,0)';
 requestAnimationFrame(step);

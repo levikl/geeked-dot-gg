@@ -191,3 +191,9 @@ img { max-width: 100%; height: auto; }
 }
 @media (min-width: 1280px) { .container { max-width: 1280px; } }
 @media (min-width: 1536px) { .container { max-width: 1536px; } }
+
+/* Reduced motion: hold the logo strip still (the script checks the same preference) and stop the caret blink. */
+@media (prefers-reduced-motion: reduce) {
+  .logo-strip__track { animation: none; }
+  .hero__caret { animation: none; }
+}
